@@ -3,7 +3,7 @@ Mealbase is an application for generating meal suggestions and other
 curious statistics about the foods you eat.
 
 ## Overview
-### The core idea in a nutshell
+### The core idea
 - The user logs the foods they eat, constantly adding to the database of meals.
   - All meals are comprised of ingredients. For each meal, the user inputs at least the
 main ingredients.
@@ -20,7 +20,7 @@ they could also be offered as suggestions here.
 example how the consumption of a certain ingredient changes in time or what was the most
 popular meal in a given year etc.
 
-### Issues
+### Possible problems
 - The main issue with this idea is that the user starts with an empty database.
   - The recommendations won't make sense, and there is not much insight to gather from
 a few ingredients.
@@ -30,19 +30,19 @@ database.
     
 ## Initial feature ideas
 ### The core features
-At least these are needed to make the core idea of the app work
+At least these are needed to implement the core idea of the app
 - Users: There should be users, and each user should only be able to see and add to
 their own data. To have users, a functionality for creating a user account is needed, as
 well as a login / logout.
-- Logging meals: to have the app work in any way, a page for logging foods is essential.
+- Logging meals: To have the app work in any way, a page for logging foods is essential.
 - Recommendations: A page on which the user can see recommendations on what to eat next.
 - Additional statistics: A page for displaying additional statistics / redirecting to
 other pages with additional statistics.
 
 ### Additional features
-These are some additional feature ideas:
+These are some additional ideas:
 - Blacklist: Maybe a user tries a new meal or an ingredient but doesn't like it.
-A functionality to "blacklist" it so mealbase won't recommend it to you anymore could be
+A functionality to "blacklist" it so mealbase won't recommend it anymore could be
 useful.
 - User roles: An admin role with access to every user's data and additional operations
 (for example deleting data).
