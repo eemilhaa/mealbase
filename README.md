@@ -2,8 +2,7 @@
 Mealbase is an application for generating meal suggestions and other
 curious statistics about the foods you eat.
 
-## Overview
-### The core idea
+## The core idea
 - The user logs the foods they eat, constantly adding to the database of meals.
   - All meals are comprised of ingredients. For each meal, the user inputs at least the
 main ingredients.
@@ -20,16 +19,8 @@ they could also be offered as suggestions here.
 example how the consumption of a certain ingredient changes in time or what was the most
 popular meal in a given year etc.
 
-### Possible problems
-- The main issue with this idea is that the user starts with an empty database.
-  - The recommendations won't make sense, and there is not much insight to gather from
-a few ingredients.
-  - In a way this could be mitigated by providing some ingredients pre-added into the
-database.
-    - This means mealbase can always recommend something, even on first log.
-    
-## Initial feature ideas
-### The core features
+## Feature ideas
+### Core features
 At least these are needed to implement the core idea of the app
 - Users: There should be users, and each user should only be able to see and add to
 their own data. To have users, a functionality for creating a user account is needed, as
@@ -49,3 +40,19 @@ useful.
 - Recipes: Each meal could have a recipe too.
 - Shopping lists: If we have recipes, we could probably generate a shopping list from a
 meal suggestion.
+
+## Setup
+Start the database container:
+```
+docker compose up -d
+```
+
+Open a bash shell to it:
+```
+docker exec -it postgres bash
+```
+
+Set up the tables:
+```
+psql -U postgres_user postgres_db < schema.sql
+```
