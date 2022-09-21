@@ -1,2 +1,2 @@
 FROM postgres:14-alpine
-COPY schema.sql ./
+COPY ./mealbase/schema.sql ./
