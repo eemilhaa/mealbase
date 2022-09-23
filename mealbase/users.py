@@ -29,6 +29,7 @@ def login(name, password, db):
     print(user)
     if check_password_hash(user["password"], password):
         session["user_name"] = name
+        session["user_id"] = user["id"]
         session["csrf_token"] = token_hex(16)
     else:
         # TODO
@@ -42,3 +43,7 @@ def logout():
 def check_csrf(request_token):
     if session["csrf_token"] != request_token:
         abort(403)
+
+
+def user_id():
+    return session.get("user_id", 0)

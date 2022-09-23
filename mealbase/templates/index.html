@@ -1,7 +1,13 @@
 {% if session.user_name %}
-<a href="/log_meal">Log a meal</a> | <a href="/suggestion">Generate suggestion</a>
-<br>
+<a href="/log_meal">Log a meal</a>
+<p>
+<a href="/meal_log">See your log</a>
+<p>
+<a href="/suggestion">Generate suggestion</a>
+<p>
 <a href="/logout">Log out</a>
 {% else %}
-<a href="/login">Log in</a> | <a href="/register">Create an account</a>
+<a href="/login">Log in</a>
+<p>
+<a href="/register">Create an account</a>
 {% endif %}
