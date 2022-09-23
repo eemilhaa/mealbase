@@ -1,4 +1,4 @@
-from flask import render_template, request, session, redirect
+from flask import render_template, request, redirect
 
 from mealbase import users
 
@@ -15,6 +15,16 @@ def create_routes(app, db):
 
         username = request.form["username"]
         password = request.form["password"]
-        # TODO: check username and password
-        session["username"] = username
+        users.login(username, password, db)
         return redirect("/")
+
+    @app.route("/register", methods=["GET", "POST"])
+    def register():
+        if request.method == "GET":
+            return render_template("register.html")
+        if request.method == "POST":
+            username = request.form["username"]
+            password = request.form["password"]
+            role = request.form["role"]
+            users.register(username, password, role, db)
+            return redirect("/")
