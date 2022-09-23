@@ -4,6 +4,11 @@ from mealbase import users
 
 
 def create_routes(app, db):
+    @app.route("/log_meal", methods=["GET", "POST"])
+    def log_meal():
+        if request.method == "GET":
+            return render_template("log_meal.html")
+
     @app.route("/")
     def index():
         return render_template("index.html")
