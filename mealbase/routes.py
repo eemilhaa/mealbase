@@ -28,3 +28,8 @@ def create_routes(app, db):
             role = request.form["role"]
             users.register(username, password, role, db)
             return redirect("/")
+
+    @app.route("/logout")
+    def logout():
+        users.logout()
+        return redirect("/")
