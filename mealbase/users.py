@@ -4,16 +4,9 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 
 def register(name, password, role, db):
-    hash_value = generate_password_hash(password)
-    sql = """
-        INSERT INTO users (name, password, role)
-        VALUES (:name, :password, :role)
-    """
-    db.session.execute(
-        sql,
-        {"name": name, "password": hash_value, "role": role},
-    )
-    db.session.commit()
+    if _username_exists(name, db):
+        return False
+    _add_user(name, password, role, db)
     return login(name, password, db)
 
 
@@ -47,3 +40,25 @@ def check_csrf(request_token):
 
 def user_id():
     return session.get("user_id", 0)
+
+
+def _add_user(name, password, role, db):
+    hash_value = generate_password_hash(password)
+    sql = """
+        INSERT INTO users (name, password, role)
+        VALUES (:name, :password, :role)
+    """
+    db.session.execute(
+        sql,
+        {"name": name, "password": hash_value, "role": role},
+    )
+    db.session.commit()
+
+
+def _username_exists(name, db):
+    sql = """
+        SELECT name FROM users WHERE name=:name
+    """
+    result = db.session.execute(sql, {"name": name})
+    username = result.fetchone()
+    return username
