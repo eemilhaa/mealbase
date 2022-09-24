@@ -17,11 +17,13 @@ CREATE TABLE ingredients (
 );
 
 CREATE TABLE meal_ingredients (
+    id SERIAL PRIMARY KEY,
     meal_id INTEGER REFERENCES meals,
     ingredient_id INTEGER REFERENCES ingredients
 );
 
 CREATE TABLE meal_log (
+    id SERIAL PRIMARY KEY,
     date DATE,
     meal_id INTEGER REFERENCES meals
 );
