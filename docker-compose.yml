@@ -4,7 +4,7 @@ services:
   db:
     build: .
     # image: postgres:14-alpine
-    restart: unless-stopped
+    # restart: unless-stopped
     environment:
       POSTGRES_USER: postgres_user
       POSTGRES_PASSWORD: postgres_password
