@@ -6,7 +6,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 def register(name, password, role, db):
     if _username_exists(name, db):
         return False
-    _add_user(name, password, role, db)
+    _add_new_user(name, password, role, db)
     return login(name, password, db)
 
 
@@ -42,7 +42,7 @@ def user_id():
     return session.get("user_id", 0)
 
 
-def _add_user(name, password, role, db):
+def _add_new_user(name, password, role, db):
     hash_value = generate_password_hash(password)
     sql = """
         INSERT INTO users (name, password, role)
