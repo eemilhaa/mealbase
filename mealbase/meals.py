@@ -3,6 +3,7 @@ def log_meal(meal, ingredients, user_id, db):
     if not meal_id:
         meal_id = _add_new_meal(meal, user_id, db)
         ingredient_ids = _add_new_ingredients(ingredients, user_id, db)
+        _add_meal_ingredient_relations(meal_id, ingredient_ids, db)
 
 
 def _get_meal_id(meal, db):
@@ -24,9 +25,8 @@ def _add_new_meal(meal, user_id, db):
         sql,
         {"user_id": user_id, "name": meal},
     )
-    id = result.fetchone()
+    id = result.fetchone()[0]
     db.session.commit()
-    print(id)
     return id
 
 
@@ -44,8 +44,23 @@ def _add_new_ingredients(ingredients, user_id, db):
             sql,
             {"user_id": user_id, "name": ingredient.lower()},
         )
-        id = result.fetchone()
-        print(ingredient, id)
-        ingredient_ids.append(id)
-        db.session.commit()
+        if result:
+            id = result.fetchone()[0]
+            ingredient_ids.append(id)
+            db.session.commit()
     return ingredient_ids
+
+
+def _add_meal_ingredient_relations(meal_id, ingredient_ids, db):
+    sql = """
+        INSERT INTO meal_ingredients (meal_id, ingredient_id)
+        VALUES (:meal_id, :ingredient_id);
+    """
+    for ingredient_id in ingredient_ids:
+        for i in range(100):
+            print(ingredient_id)
+        db.session.execute(
+            sql,
+            {"meal_id": meal_id, "ingredient_id": ingredient_id}
+        )
+        db.session.commit()
