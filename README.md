@@ -30,6 +30,9 @@ feature somewhat works, not that it is finished / polished.
 - [x] A page for viewing the meal log
 - [x] A page for viewing logged ingredients
 - [ ] A page with recommendations
+- [ ] Situational error messages: For example, when creating a user account, if the
+username is already taken, the app should tell the user about this. Currently it
+just takes the user back to the initial login view.
 - [ ] Nicer UI
 
 ### Additional features
