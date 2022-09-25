@@ -13,12 +13,12 @@ CREATE TABLE meals (
 
 CREATE TABLE ingredients (
     id SERIAL PRIMARY KEY,
-    user_id INTEGER REFERENCES users,
     name TEXT
 );
 
 CREATE TABLE meal_ingredients (
     id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users,
     meal_id INTEGER REFERENCES meals,
     ingredient_id INTEGER REFERENCES ingredients
 );
