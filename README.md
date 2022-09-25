@@ -44,24 +44,24 @@ useful.
 from a meal suggestion.
 
 ## Setup
-### Setting up a local database
-Start the database container:
-console```
+### Setting up a local database container
+Start the service:
+```console
 docker compose up -d
 ```
 
-Open a bash shell to it:
-console```
+Open a bash shell to the container:
+```console
 docker exec -it postgres bash
 ```
 
 Set up the tables:
-console```
+```console
 psql -U postgres_user postgres_db < schema.sql
 ```
 
 ### Deploying to heroku
 Setup heroku database from container:
-```
+```console
 heroku psql < schema.sql --app tsoha-mealbase
 ```
