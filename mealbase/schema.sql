@@ -25,6 +25,6 @@ CREATE TABLE meal_ingredients (
 
 CREATE TABLE meal_log (
     id SERIAL PRIMARY KEY,
-    date DATE,
+    date DATE DEFAULT NOW(),
     meal_id INTEGER REFERENCES meals
 );
