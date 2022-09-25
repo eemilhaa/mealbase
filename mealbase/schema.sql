@@ -8,13 +8,13 @@ CREATE TABLE users (
 CREATE TABLE meals (
     id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES users,
-    name TEXT UNIQUE
+    name TEXT
 );
 
 CREATE TABLE ingredients (
     id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES users,
-    name TEXT UNIQUE
+    name TEXT
 );
 
 CREATE TABLE meal_ingredients (
