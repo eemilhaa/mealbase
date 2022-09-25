@@ -4,7 +4,7 @@ def log_meal(meal, ingredients, user_id, db):
         meal_id = _add_new_meal(meal, user_id, db)
         ingredient_ids = _add_ingredients(ingredients, user_id, db)
         _add_meal_ingredient_relations(meal_id, ingredient_ids, db)
-    # _log_meal()
+    _add_meal_to_log(meal_id, db)
 
 
 def _get_id(table, name, db):
@@ -73,3 +73,15 @@ def _add_meal_ingredient_relations(meal_id, ingredient_ids, db):
                 {"meal_id": meal_id, "ingredient_id": ingredient_id}
             )
             db.session.commit()
+
+
+def _add_meal_to_log(meal_id, db):
+    sql = """
+        INSERT INTO meal_log (meal_id)
+        VALUES (:meal_id);
+    """
+    db.session.execute(
+        sql,
+        {"meal_id": meal_id}
+    )
+    db.session.commit()
