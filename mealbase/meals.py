@@ -7,6 +7,18 @@ def log_meal(meal, ingredients, user_id, db):
     _add_meal_to_log(meal_id, db)
 
 
+def get_log(db):
+    sql = """
+        SELECT meals.name, meal_log.date
+        FROM meals, meal_log
+        WHERE meals.id = meal_log.meal_id
+        ORDER BY meal_log.date;
+    """
+    result = db.session.execute(sql)
+    all_meals = result.fetchall()
+    return all_meals
+
+
 def _get_id(table, name, db):
     sql = f"""
         SELECT id FROM {table} WHERE name=:name

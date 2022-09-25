@@ -1,0 +1,8 @@
+<hr>
+{% for row in log %}
+<b>Meal:</b> {{ row[0] }}
+<p>
+<b>Date:</b> {{ row[1].strftime("%Y-%m-%d") }}
+<hr>
+{% endfor %}
+<a href="/">Frontpage</a>

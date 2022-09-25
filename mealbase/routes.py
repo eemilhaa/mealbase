@@ -14,6 +14,11 @@ def create_routes(app, db):
         meals.log_meal(meal, ingredients, users.user_id(), db)
         return redirect("/")
 
+    @app.route("/meal_log")
+    def meal_log():
+        meal_log = meals.get_log(db)
+        return render_template("meal_log.html", log=meal_log)
+
     @app.route("/")
     def index():
         return render_template("index.html")
