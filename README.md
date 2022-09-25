@@ -1,5 +1,6 @@
 # Mealbase
-Mealbase is an application for generating meal suggestions about the foods you eat.
+Mealbase is an application for generating meal suggestions about the foods you eat. Try
+it on [heroku](https://tsoha-mealbase.herokuapp.com/) (but read this readme first!)
 
 ## The idea
 - The user logs the meals they eat.
@@ -7,7 +8,8 @@ Mealbase is an application for generating meal suggestions about the foods you e
 main ingredients.
     - i.e. meatballs and spaghetti -> meat, pasta. Chicken soup -> chicken, potatoes.
 - Based on the record of meals, mealbase tries to suggest foods that keep your menu
-diverse. **Note** suggestions have not yet been implememted.
+diverse. 
+> **Note** the suggestion logic has not yet been implemented.
   - Recommendations are done based on ingredients. Say the user has recently logged
 meatballs and spaghetti and chicken soup as eaten meals. Thus, Meat, chicken, pasta and
 potatoes are ingredients mealbase tries to avoid when recommending the next meal.
@@ -33,9 +35,9 @@ feature somewhat works, not that it is finished / polished.
 ### Additional features
 - [ ] A page for displaying additional statistics / redirecting to other pages with
 additional statistics.
-- [ ] User roles: An admin role with access to additional operations. **Note** at the
-moment when creating an account role selection is available, but it does not do
-anything
+- [ ] User roles: An admin role with access to additional operations.
+> **Note** at the moment when creating an account role selection is available, but it
+does not do anything
 - [ ] Blacklist: Maybe a user tries a new meal or an ingredient but doesn't like it.
 A functionality to "blacklist" it so mealbase won't recommend it anymore could be
 useful.
