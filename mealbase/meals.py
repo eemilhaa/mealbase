@@ -27,7 +27,7 @@ def _add_new_meal(meal, user_id, db):
     """
     result = db.session.execute(
         sql,
-        {"user_id": user_id, "name": meal},
+        {"user_id": user_id, "name": meal.lower()},
     )
     id = result.fetchone()[0]
     db.session.commit()
