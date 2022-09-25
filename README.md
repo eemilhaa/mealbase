@@ -56,3 +56,8 @@ Set up the tables:
 ```
 psql -U postgres_user postgres_db < schema.sql
 ```
+
+Setup heroku database from container:
+```
+heroku psql < schema.sql --app tsoha-mealbase
+```
