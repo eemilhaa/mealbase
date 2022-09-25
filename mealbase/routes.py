@@ -16,8 +16,13 @@ def create_routes(app, db):
 
     @app.route("/meal_log")
     def meal_log():
-        meal_log = meals.get_log(db)
+        meal_log = meals.get_log(users.user_id(), db)
         return render_template("meal_log.html", log=meal_log)
+
+    @app.route("/all_ingredients")
+    def all_ingredients():
+        all_ingredients = meals.get_ingredients(users.user_id(), db)
+        return render_template("ingredients.html", ingredients=all_ingredients)
 
     @app.route("/")
     def index():
