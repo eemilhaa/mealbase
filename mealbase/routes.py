@@ -34,7 +34,11 @@ def create_routes(app, db):
             return render_template("login.html")
         username = request.form["username"]
         password = request.form["password"]
-        users.login(username, password, db)
+        if not users.login(username, password, db):
+            return render_template(
+                "error.html",
+                content="Wrong username / password"
+            )
         return redirect("/")
 
     @app.route("/register", methods=["GET", "POST"])
