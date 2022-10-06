@@ -34,7 +34,8 @@ def create_routes(app, db):
             return render_template("login.html")
         username = request.form["username"]
         password = request.form["password"]
-        if not users.login(username, password, db):
+        login_ok = users.login(username, password, db)
+        if not login_ok:
             return render_template(
                 "error.html",
                 content="Wrong username / password"
