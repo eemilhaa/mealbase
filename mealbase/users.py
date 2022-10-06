@@ -5,9 +5,9 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 def register(name, password, role, db):
     if _username_exists(name, db):
-        return False
+        raise Exception("Username is already taken")
     _add_new_user(name, password, role, db)
-    return login(name, password, db)
+    login(name, password, db)
 
 
 def login(name, password, db):
@@ -16,16 +16,15 @@ def login(name, password, db):
     """
     result = db.session.execute(sql, {"name": name})
     user = result.fetchone()
-    print(user)
+    # TODO could also do distinct errors here
     if not user:
-        return False
+        raise Exception("Wrong username / password")
     password_ok = check_password_hash(user["password"], password)
     if not password_ok:
-        return False
+        raise Exception("Wrong username / password")
     session["user_name"] = name
     session["user_id"] = user["id"]
     session["csrf_token"] = token_hex(16)
-    return True
 
 
 def logout():

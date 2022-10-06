@@ -34,12 +34,10 @@ def create_routes(app, db):
             return render_template("login.html")
         username = request.form["username"]
         password = request.form["password"]
-        login_ok = users.login(username, password, db)
-        if not login_ok:
-            return render_template(
-                "error.html",
-                content="Wrong username / password"
-            )
+        try:
+            users.login(username, password, db)
+        except Exception as error:
+            return _show_error_page(error)
         return redirect("/")
 
     @app.route("/register", methods=["GET", "POST"])
@@ -50,10 +48,20 @@ def create_routes(app, db):
             username = request.form["username"]
             password = request.form["password"]
             role = request.form["role"]
-            users.register(username, password, role, db)
+            try:
+                users.register(username, password, role, db)
+            except Exception as error:
+                return _show_error_page(error)
             return redirect("/")
 
     @app.route("/logout")
     def logout():
         users.logout()
         return redirect("/")
+
+
+def _show_error_page(error):
+    return render_template(
+        "error.html",
+        content=error,
+    )
