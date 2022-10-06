@@ -16,17 +16,16 @@ def login(name, password, db):
     """
     result = db.session.execute(sql, {"name": name})
     user = result.fetchone()
-    if not user:
-        # TODO
-        return False
     print(user)
-    if check_password_hash(user["password"], password):
-        session["user_name"] = name
-        session["user_id"] = user["id"]
-        session["csrf_token"] = token_hex(16)
-    else:
-        # TODO
+    if not user:
         return False
+    password_ok = check_password_hash(user["password"], password)
+    if not password_ok:
+        return False
+    session["user_name"] = name
+    session["user_id"] = user["id"]
+    session["csrf_token"] = token_hex(16)
+    return True
 
 
 def logout():
