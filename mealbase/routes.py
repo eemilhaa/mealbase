@@ -37,7 +37,7 @@ def create_routes(app, db):
         try:
             users.login(username, password, db)
         except Exception as error:
-            return _show_error_page(error)
+            return _show_error_page(error, link="/login")
         return redirect("/")
 
     @app.route("/register", methods=["GET", "POST"])
@@ -51,7 +51,7 @@ def create_routes(app, db):
             try:
                 users.register(username, password, role, db)
             except Exception as error:
-                return _show_error_page(error)
+                return _show_error_page(error, link="/register")
             return redirect("/")
 
     @app.route("/logout")
@@ -60,9 +60,9 @@ def create_routes(app, db):
         return redirect("/")
 
 
-def _show_error_page(error, redirect="/"):
+def _show_error_page(error, link="/"):
     return render_template(
         "error.html",
         content=error,
-        redirect_to=redirect,
+        redirect_to=link,
     )
