@@ -79,12 +79,12 @@ def _validate_username(name, db):
 
 def _validate_password(password):
     correct_lenght = len(password) >= 3
-    has_special_characters = any(not char.isalnum() for char in password)
+    no_special_characters = password.isalnum()
     if not correct_lenght:
         raise Exception(
             "Password length should be at least 3 characters"
         )
-    if not has_special_characters:
+    if no_special_characters:
         raise Exception(
             "Password should contain at least one special character"
         )
