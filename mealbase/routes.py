@@ -60,8 +60,9 @@ def create_routes(app, db):
         return redirect("/")
 
 
-def _show_error_page(error):
+def _show_error_page(error, redirect="/"):
     return render_template(
         "error.html",
         content=error,
+        redirect_to=redirect,
     )

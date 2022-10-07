@@ -7,16 +7,18 @@ def register(name, password, role, db):
     _validate_username(name, db)
     _validate_password(password)
     _add_new_user(name, password, role, db)
-    login(name, password, db)
+    _login(name, password, db)
 
 
 def login(name, password, db):
-    sql = """
-        SELECT password, id, role FROM users WHERE name=:name
-    """
-    result = db.session.execute(sql, {"name": name})
-    user = result.fetchone()
-    # TODO could also do distinct errors here
+    if not name or not password:
+        raise Exception("Input both a username and a password")
+    _login(name, password, db)
+
+
+def _login(name, password, db):
+    user = _get_user(name, db)
+    print(user)
     if not user:
         raise Exception("Wrong username / password")
     password_ok = check_password_hash(user["password"], password)
@@ -56,7 +58,7 @@ def _add_new_user(name, password, role, db):
 
 
 def _validate_username(name, db):
-    if _username_exists(name, db):
+    if _get_user(name, db):
         raise Exception(
             f'Username "{name}" is already taken'
         )
@@ -88,12 +90,10 @@ def _validate_password(password):
         )
 
 
-def _username_exists(name, db):
+def _get_user(name, db):
     sql = """
-        SELECT name FROM users WHERE name=:name
+        SELECT id, name, password, role FROM users WHERE name=:name
     """
     result = db.session.execute(sql, {"name": name})
-    username = result.fetchone()
-    if username:
-        return True
-    return False
+    user = result.fetchone()
+    return user
