@@ -4,8 +4,8 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 
 def register(name, password, role, db):
-    if _username_exists(name, db):
-        raise Exception("Username is already taken")
+    _validate_username(name, db)
+    _validate_password(password)
     _add_new_user(name, password, role, db)
     login(name, password, db)
 
@@ -55,10 +55,45 @@ def _add_new_user(name, password, role, db):
     db.session.commit()
 
 
+def _validate_username(name, db):
+    if _username_exists(name, db):
+        raise Exception(
+            f'Username "{name}" is already taken'
+        )
+    correct_length = len(name) >= 3 and len(name) <= 20
+    special_characters = [char for char in name if not char.isalnum()]
+    if not correct_length:
+        raise Exception(
+            "Name length should be 3-20 characters"
+        )
+    if special_characters:
+        raise Exception(
+            f"""
+            Name should only contain alphanumeric characters.
+            These are not alphanumeric: {"".join(special_characters)}
+            """
+        )
+
+
+def _validate_password(password):
+    correct_lenght = len(password) >= 3
+    has_special_characters = any(not char.isalnum() for char in password)
+    if not correct_lenght:
+        raise Exception(
+            "Password length should be at least 3 characters"
+        )
+    if not has_special_characters:
+        raise Exception(
+            "Password should contain at least one special character"
+        )
+
+
 def _username_exists(name, db):
     sql = """
         SELECT name FROM users WHERE name=:name
     """
     result = db.session.execute(sql, {"name": name})
     username = result.fetchone()
-    return username
+    if username:
+        return True
+    return False
