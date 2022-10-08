@@ -1,3 +1,6 @@
+import datetime
+
+
 def log_meal(meal, log_date, ingredients, user_id, db):
     meal_id = _get_id("meals", meal, db, user_id,)
     if not meal_id:
@@ -39,7 +42,7 @@ def get_ingredients(user_id, db):
 def generate_suggestions(user_id, db):
     ingredient_history = _get_ingredient_history(user_id, db)
     suggestions = _generate_suggestions(ingredient_history)
-    return ingredient_history
+    return suggestions
 
 
 def _get_ingredient_history(user_id, db):
@@ -60,9 +63,19 @@ def _get_ingredient_history(user_id, db):
     return ingredient_history
 
 
-def _generate_suggestions(ingredients):
-
-    pass
+def _generate_suggestions(ingredient_history):
+    today = datetime.date.today()
+    seen = []
+    time_deltas = []
+    for ingredient, date in ingredient_history:
+        if ingredient not in seen:
+            seen.append(ingredient)
+            time_deltas.append((
+                ingredient,
+                today-date,
+            ))
+    suggestions = time_deltas[-4:]
+    return suggestions
 
 
 def _get_id(table, name, db, user_id=None):
