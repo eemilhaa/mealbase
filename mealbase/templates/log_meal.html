@@ -1,6 +1,8 @@
 <form action="/log_meal" method="post", id="log_meal">
 Meal: <input type="text" name="meal">
 <p>
+Date: <input type="date" name="date" value={{default_date}}>
+<p>
 Main ingredients (separate with a comma + space: ingredient1, ingredient2, ...):
 <p>
 <textarea name="ingredients" form="log_meal", rows="5", cols="33"></textarea>
