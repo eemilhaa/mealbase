@@ -38,12 +38,14 @@ def get_ingredients(user_id, db):
 
 def generate_suggestions(user_id, db):
     ingredient_history = _get_ingredient_history(user_id, db)
+    suggestions = _generate_suggestions(ingredient_history)
     return ingredient_history
 
 
 def _get_ingredient_history(user_id, db):
     sql = """
-        SELECT ingredients.name FROM ingredients, meal_ingredients, meal_log
+        SELECT ingredients.name, meal_log.date
+        FROM ingredients, meal_ingredients, meal_log
         WHERE meal_ingredients.user_id=:user_id
         AND ingredients.id=meal_ingredients.ingredient_id
         AND meal_log.meal_id=meal_ingredients.meal_id
@@ -54,7 +56,13 @@ def _get_ingredient_history(user_id, db):
         {"user_id": user_id}
     )
     ingredient_history = result.fetchall()
+    print(ingredient_history)
     return ingredient_history
+
+
+def _generate_suggestions(ingredients):
+
+    pass
 
 
 def _get_id(table, name, db, user_id=None):
