@@ -1,10 +1,10 @@
-def log_meal(meal, ingredients, user_id, db):
+def log_meal(meal, log_date, ingredients, user_id, db):
     meal_id = _get_id("meals", meal, db, user_id,)
     if not meal_id:
         meal_id = _add_new_meal(meal, user_id, db)
         ingredient_ids = _add_ingredients(ingredients, db)
         _add_meal_ingredient_relations(meal_id, ingredient_ids, user_id, db)
-    _add_meal_to_log(meal_id, db)
+    _add_meal_to_log(meal_id, log_date, db)
 
 
 def get_log(user_id, db):
@@ -12,7 +12,7 @@ def get_log(user_id, db):
         SELECT meals.name, meal_log.date
         FROM meals, meal_log
         WHERE meals.id = meal_log.meal_id AND meals.user_id=:user_id
-        ORDER BY meal_log.date;
+        ORDER BY meal_log.date DESC;
     """
     result = db.session.execute(
         sql,
@@ -46,7 +46,8 @@ def _get_ingredient_history(user_id, db):
         SELECT ingredients.name FROM ingredients, meal_ingredients, meal_log
         WHERE meal_ingredients.user_id=:user_id
         AND ingredients.id=meal_ingredients.ingredient_id
-        AND meal_log.meal_id=meal_ingredients.meal_id;
+        AND meal_log.meal_id=meal_ingredients.meal_id
+        ORDER BY meal_log.date DESC;
     """
     result = db.session.execute(
         sql,
@@ -137,13 +138,13 @@ def _add_meal_ingredient_relations(meal_id, ingredient_ids, user_id, db):
             db.session.commit()
 
 
-def _add_meal_to_log(meal_id, db):
+def _add_meal_to_log(meal_id, log_date, db):
     sql = """
-        INSERT INTO meal_log (meal_id)
-        VALUES (:meal_id);
+        INSERT INTO meal_log (meal_id, date)
+        VALUES (:meal_id, :date);
     """
     db.session.execute(
         sql,
-        {"meal_id": meal_id}
+        {"meal_id": meal_id, "date": log_date}
     )
     db.session.commit()
