@@ -36,6 +36,26 @@ def get_ingredients(user_id, db):
     return all_ingredients
 
 
+def generate_suggestions(user_id, db):
+    ingredient_history = _get_ingredient_history(user_id, db)
+    return ingredient_history
+
+
+def _get_ingredient_history(user_id, db):
+    sql = """
+        SELECT ingredients.name FROM ingredients, meal_ingredients, meal_log
+        WHERE meal_ingredients.user_id=:user_id
+        AND ingredients.id=meal_ingredients.ingredient_id
+        AND meal_log.meal_id=meal_ingredients.meal_id;
+    """
+    result = db.session.execute(
+        sql,
+        {"user_id": user_id}
+    )
+    ingredient_history = result.fetchall()
+    return ingredient_history
+
+
 def _get_id(table, name, db, user_id=None):
     sql_user = f"""
         SELECT id FROM {table} WHERE name=:name AND user_id=:user_id;
