@@ -66,15 +66,14 @@ def _get_ingredient_history(user_id, db):
 def _generate_suggestions(ingredient_history):
     today = datetime.date.today()
     seen = []
-    time_deltas = []
+    timedeltas = []
     for ingredient, date in ingredient_history:
         if ingredient not in seen:
             seen.append(ingredient)
-            time_deltas.append((
-                ingredient,
-                today-date,
-            ))
-    suggestions = time_deltas[-4:]
+            timedelta = today - date
+            timedeltas.append((ingredient, timedelta.days))
+    # TODO make number of suggestions dynamic?
+    suggestions = timedeltas[-4:]
     return suggestions
 
 
