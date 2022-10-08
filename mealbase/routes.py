@@ -24,6 +24,11 @@ def create_routes(app, db):
         all_ingredients = meals.get_ingredients(users.user_id(), db)
         return render_template("ingredients.html", ingredients=all_ingredients)
 
+    @app.route("/suggestions")
+    def suggestions():
+        suggestions = meals.generate_suggestions(users.user_id(), db)
+        return render_template("suggestions.html", suggestions=suggestions)
+
     @app.route("/")
     def index():
         return render_template("index.html")
