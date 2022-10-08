@@ -1,4 +1,5 @@
 from flask import render_template, request, redirect
+from datetime import date
 
 from mealbase import users
 from mealbase import meals
@@ -8,10 +9,14 @@ def create_routes(app, db):
     @app.route("/log_meal", methods=["GET", "POST"])
     def log_meal():
         if request.method == "GET":
-            return render_template("log_meal.html")
+            return render_template(
+                "log_meal.html",
+                default_date=date.today()
+            )
         meal = request.form["meal"]
+        log_date = request.form["date"]
         ingredients = request.form["ingredients"]
-        meals.log_meal(meal, ingredients, users.user_id(), db)
+        meals.log_meal(meal, log_date, ingredients, users.user_id(), db)
         return redirect("/")
 
     @app.route("/meal_log")
