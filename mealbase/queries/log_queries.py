@@ -1,3 +1,14 @@
+def log_meal(meal, log_date, ingredients, user_id, db):
+    meal_id = _get_id("meals", meal, db, user_id,)
+    if not meal_id:
+        meal_id = _add_new_meal(meal, user_id, db)
+        ingredient_ids = _add_ingredients(ingredients, db)
+        _add_meal_ingredient_relations(
+            meal_id, ingredient_ids, user_id, db
+        )
+    _add_meal_to_log(meal_id, log_date, db)
+
+
 def get_log(user_id, db):
     sql = """
         SELECT meals.name, meal_log.date
@@ -44,7 +55,7 @@ def get_ingredient_history(user_id, db):
     return ingredient_history
 
 
-def get_id(table, name, db, user_id=None):
+def _get_id(table, name, db, user_id=None):
     sql_user = f"""
         SELECT id FROM {table} WHERE name=:name AND user_id=:user_id;
     """
@@ -65,7 +76,7 @@ def get_id(table, name, db, user_id=None):
         return False
 
 
-def add_new_meal(meal, user_id, db):
+def _add_new_meal(meal, user_id, db):
     sql = """
         INSERT INTO meals (user_id, name)
         VALUES (:user_id, :name)
@@ -80,7 +91,7 @@ def add_new_meal(meal, user_id, db):
     return id
 
 
-def add_ingredients(ingredients, db):
+def _add_ingredients(ingredients, db):
     sql = """
         INSERT INTO ingredients (name)
         VALUES (:name)
@@ -90,7 +101,7 @@ def add_ingredients(ingredients, db):
     ingredient_list = ingredients.split(", ")
     ingredient_ids = []
     for ingredient in ingredient_list:
-        id = get_id("ingredients", ingredient, db)
+        id = _get_id("ingredients", ingredient, db)
         if id:
             ingredient_ids.append(id)
         else:
@@ -107,7 +118,7 @@ def add_ingredients(ingredients, db):
     return ingredient_ids
 
 
-def add_meal_ingredient_relations(meal_id, ingredient_ids, user_id, db):
+def _add_meal_ingredient_relations(meal_id, ingredient_ids, user_id, db):
     sql = """
         INSERT INTO meal_ingredients (user_id, meal_id, ingredient_id)
         VALUES (:user_id, :meal_id, :ingredient_id);
@@ -125,7 +136,7 @@ def add_meal_ingredient_relations(meal_id, ingredient_ids, user_id, db):
             db.session.commit()
 
 
-def add_meal_to_log(meal_id, log_date, db):
+def _add_meal_to_log(meal_id, log_date, db):
     sql = """
         INSERT INTO meal_log (meal_id, date)
         VALUES (:meal_id, :date);
