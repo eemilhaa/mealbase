@@ -10,6 +10,7 @@ def log_meal(meal, log_date, ingredients, user_id, db):
     _validate_input(ingredients, max_length=300)
     log_queries.log_meal(meal, log_date, ingredients, user_id, db)
 
+
 def get_log(user_id, db):
     all_meals = log_queries.get_log(user_id, db)
     return all_meals
