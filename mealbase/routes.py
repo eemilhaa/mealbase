@@ -2,7 +2,7 @@ from flask import render_template, request, redirect
 from datetime import date
 
 from mealbase import users
-from mealbase import meals
+from mealbase import log
 
 
 def create_routes(app, db):
@@ -16,22 +16,22 @@ def create_routes(app, db):
         meal = request.form["meal"]
         log_date = request.form["date"]
         ingredients = request.form["ingredients"]
-        meals.log_meal(meal, log_date, ingredients, users.user_id(), db)
+        log.log_meal(meal, log_date, ingredients, users.user_id(), db)
         return redirect("/")
 
     @app.route("/meal_log")
     def meal_log():
-        meal_log = meals.get_log(users.user_id(), db)
+        meal_log = log.get_log(users.user_id(), db)
         return render_template("meal_log.html", log=meal_log)
 
     @app.route("/all_ingredients")
     def all_ingredients():
-        all_ingredients = meals.get_ingredients(users.user_id(), db)
+        all_ingredients = log.get_ingredients(users.user_id(), db)
         return render_template("ingredients.html", ingredients=all_ingredients)
 
     @app.route("/suggestions")
     def suggestions():
-        suggestions = meals.generate_suggestions(users.user_id(), db)
+        suggestions = log.generate_suggestions(users.user_id(), db)
         return render_template("suggestions.html", suggestions=suggestions)
 
     @app.route("/")

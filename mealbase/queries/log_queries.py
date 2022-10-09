@@ -1,15 +1,3 @@
-import datetime
-
-
-def log_meal(meal, log_date, ingredients, user_id, db):
-    meal_id = _get_id("meals", meal, db, user_id,)
-    if not meal_id:
-        meal_id = _add_new_meal(meal, user_id, db)
-        ingredient_ids = _add_ingredients(ingredients, db)
-        _add_meal_ingredient_relations(meal_id, ingredient_ids, user_id, db)
-    _add_meal_to_log(meal_id, log_date, db)
-
-
 def get_log(user_id, db):
     sql = """
         SELECT meals.name, meal_log.date
@@ -39,13 +27,7 @@ def get_ingredients(user_id, db):
     return all_ingredients
 
 
-def generate_suggestions(user_id, db):
-    ingredient_history = _get_ingredient_history(user_id, db)
-    suggestions = _generate_suggestions(ingredient_history)
-    return suggestions
-
-
-def _get_ingredient_history(user_id, db):
+def get_ingredient_history(user_id, db):
     sql = """
         SELECT ingredients.name, meal_log.date
         FROM ingredients, meal_ingredients, meal_log
@@ -59,25 +41,10 @@ def _get_ingredient_history(user_id, db):
         {"user_id": user_id}
     )
     ingredient_history = result.fetchall()
-    print(ingredient_history)
     return ingredient_history
 
 
-def _generate_suggestions(ingredient_history):
-    today = datetime.date.today()
-    seen = []
-    timedeltas = []
-    for ingredient, date in ingredient_history:
-        if ingredient not in seen:
-            seen.append(ingredient)
-            timedelta = today - date
-            timedeltas.append((ingredient, timedelta.days))
-    # TODO make number of suggestions dynamic?
-    suggestions = timedeltas[-4:]
-    return suggestions
-
-
-def _get_id(table, name, db, user_id=None):
+def get_id(table, name, db, user_id=None):
     sql_user = f"""
         SELECT id FROM {table} WHERE name=:name AND user_id=:user_id;
     """
@@ -98,7 +65,7 @@ def _get_id(table, name, db, user_id=None):
         return False
 
 
-def _add_new_meal(meal, user_id, db):
+def add_new_meal(meal, user_id, db):
     sql = """
         INSERT INTO meals (user_id, name)
         VALUES (:user_id, :name)
@@ -113,7 +80,7 @@ def _add_new_meal(meal, user_id, db):
     return id
 
 
-def _add_ingredients(ingredients, db):
+def add_ingredients(ingredients, db):
     sql = """
         INSERT INTO ingredients (name)
         VALUES (:name)
@@ -123,7 +90,7 @@ def _add_ingredients(ingredients, db):
     ingredient_list = ingredients.split(", ")
     ingredient_ids = []
     for ingredient in ingredient_list:
-        id = _get_id("ingredients", ingredient, db)
+        id = get_id("ingredients", ingredient, db)
         if id:
             ingredient_ids.append(id)
         else:
@@ -140,7 +107,7 @@ def _add_ingredients(ingredients, db):
     return ingredient_ids
 
 
-def _add_meal_ingredient_relations(meal_id, ingredient_ids, user_id, db):
+def add_meal_ingredient_relations(meal_id, ingredient_ids, user_id, db):
     sql = """
         INSERT INTO meal_ingredients (user_id, meal_id, ingredient_id)
         VALUES (:user_id, :meal_id, :ingredient_id);
@@ -158,7 +125,7 @@ def _add_meal_ingredient_relations(meal_id, ingredient_ids, user_id, db):
             db.session.commit()
 
 
-def _add_meal_to_log(meal_id, log_date, db):
+def add_meal_to_log(meal_id, log_date, db):
     sql = """
         INSERT INTO meal_log (meal_id, date)
         VALUES (:meal_id, :date);

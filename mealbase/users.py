@@ -2,6 +2,8 @@ from secrets import token_hex
 from flask import session, abort
 from werkzeug.security import check_password_hash, generate_password_hash
 
+from mealbase.queries import user_queries
+
 
 def register(name, password, role, db):
     _validate_username(name, db)
@@ -14,19 +16,6 @@ def login(name, password, db):
     if not name or not password:
         raise Exception("Input both a username and a password")
     _login(name, password, db)
-
-
-def _login(name, password, db):
-    user = _get_user(name, db)
-    print(user)
-    if not user:
-        raise Exception("Wrong username / password")
-    password_ok = check_password_hash(user["password"], password)
-    if not password_ok:
-        raise Exception("Wrong username / password")
-    session["user_name"] = name
-    session["user_id"] = user["id"]
-    session["csrf_token"] = token_hex(16)
 
 
 def logout():
@@ -44,21 +33,21 @@ def user_id():
     return session.get("user_id", 0)
 
 
-def _add_new_user(name, password, role, db):
-    hash_value = generate_password_hash(password)
-    sql = """
-        INSERT INTO users (name, password, role)
-        VALUES (:name, :password, :role)
-    """
-    db.session.execute(
-        sql,
-        {"name": name, "password": hash_value, "role": role},
-    )
-    db.session.commit()
+def _login(name, password, db):
+    user = user_queries.get_user(name, db)
+    print(user)
+    if not user:
+        raise Exception("Wrong username / password")
+    password_ok = check_password_hash(user["password"], password)
+    if not password_ok:
+        raise Exception("Wrong username / password")
+    session["user_name"] = name
+    session["user_id"] = user["id"]
+    session["csrf_token"] = token_hex(16)
 
 
 def _validate_username(name, db):
-    if _get_user(name, db):
+    if user_queries.get_user(name, db):
         raise Exception(
             f'Username "{name}" is already taken'
         )
@@ -90,10 +79,6 @@ def _validate_password(password):
         )
 
 
-def _get_user(name, db):
-    sql = """
-        SELECT id, name, password, role FROM users WHERE name=:name
-    """
-    result = db.session.execute(sql, {"name": name})
-    user = result.fetchone()
-    return user
+def _add_new_user(name, password, role, db):
+    hash_value = generate_password_hash(password)
+    user_queries.add_user(name, hash_value, role, db)
