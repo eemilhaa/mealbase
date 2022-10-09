@@ -17,7 +17,10 @@ def create_routes(app, db):
         meal = request.form["meal"]
         log_date = request.form["date"]
         ingredients = request.form["ingredients"]
-        log.log_meal(meal, log_date, ingredients, users.user_id(), db)
+        try:
+            log.log_meal(meal, log_date, ingredients, users.user_id(), db)
+        except Exception as error:
+            return _show_error_page(error, link="/log_meal")
         return redirect("/")
 
     @app.route("/meal_log")

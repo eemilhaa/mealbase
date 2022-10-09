@@ -4,6 +4,11 @@ from mealbase.queries import log_queries
 
 
 def log_meal(meal, log_date, ingredients, user_id, db):
+    if not meal or not ingredients:
+        raise Exception("Input both the meal and the ingredients")
+    _validate_input(meal, max_length=100)
+    _validate_input(ingredients, max_length=300)
+    # TODO
     meal_id = log_queries.get_id("meals", meal, db, user_id,)
     if not meal_id:
         meal_id = log_queries.add_new_meal(meal, user_id, db)
@@ -42,3 +47,19 @@ def _generate_suggestions(ingredient_history):
     # TODO make number of suggestions dynamic?
     suggestions = timedeltas[-4:]
     return suggestions
+
+
+def _validate_input(input, max_length):
+    correct_length = len(input) <= max_length
+    special_characters = [char for char in input if not char.isalnum()]
+    if not correct_length:
+        raise Exception(
+            "Too much input"
+        )
+    if special_characters:
+        raise Exception(
+            f"""
+            Input should only contain alphanumeric characters.
+            These are not alphanumeric: {"".join(special_characters)}
+            """
+        )
