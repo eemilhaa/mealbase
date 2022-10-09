@@ -37,6 +37,7 @@ def _generate_suggestions(ingredient_history):
             timedeltas.append((ingredient, timedelta.days))
     # TODO make number of suggestions dynamic?
     suggestions = timedeltas[-4:]
+    suggestions.reverse()
     return suggestions
 
 
