@@ -23,7 +23,6 @@ def logout():
     del session["user_id"]
 
 
-# TODO
 def check_csrf(request_token):
     if session["csrf_token"] != request_token:
         abort(403)

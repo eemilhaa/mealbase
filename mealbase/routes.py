@@ -13,6 +13,7 @@ def create_routes(app, db):
                 "log_meal.html",
                 default_date=date.today()
             )
+        users.check_csrf(request.form["csrf_token"])
         meal = request.form["meal"]
         log_date = request.form["date"]
         ingredients = request.form["ingredients"]
