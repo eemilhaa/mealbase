@@ -8,5 +8,6 @@ Main ingredients (separate with a comma + space: ingredient1, ingredient2, ...):
 <textarea name="ingredients" form="log_meal", rows="5", cols="33"></textarea>
 <p>
 <input type="submit" value="Log">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 <a href="/">Back</a>
