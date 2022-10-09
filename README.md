@@ -14,15 +14,16 @@ suggests ingredients based on the number of days since they have last been logge
 longer the time since last eaten, the higher the priority for suggesting.
 
 ## Features
-The current status of features is tracked here. At this point a checked box means the
-feature somewhat works, not that it is finished / polished.
+The current status of features:
 ### Core features
 - [x] Creating user accounts
 - [x] A login / logout
-- [x] A page for logging foods
+- [x] A page for logging foods: Works, but logging meals could be separated from logging
+ingredients, since if a meal is already in the database, ingredients are not needed.
 - [x] A page for viewing the meal log
 - [x] A page for viewing logged ingredients
-- [x] A page with recommendations: Currently a fixed number of 4 ingredients is suggested
+- [x] A page with recommendations: Currently a fixed number of 4 ingredients is
+suggested, could be more dynamic
 - [x] Situational error messages and redirecting from errors
 - [ ] Nicer UI
 
@@ -41,7 +42,7 @@ useful.
 from a meal suggestion.
 
 ## Architechture
-```console
+```
 mealbase
 ├── schema.sql  # Database schema
 ├── config.py   # Access to env variables
