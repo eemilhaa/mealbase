@@ -1,3 +1,6 @@
+{% extends "layout.html" %}
+{% block title %}Meal log{% endblock %}
+{% block content %}
 <hr>
 {% for row in log %}
 <b>Meal:</b> {{ row[0] }}
@@ -6,3 +9,4 @@
 <hr>
 {% endfor %}
 <a href="/">Frontpage</a>
+{% endblock %}

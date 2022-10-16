@@ -1,3 +1,6 @@
+{% extends "layout.html" %}
+{% block title %}Log in{% endblock %}
+{% block content %}
 <form action="/login" method="post">
 Username: <input type="text" name="username">
 <p>
@@ -7,3 +10,4 @@ Password: <input type="password" name="password">
 <p>
 <a href="/">Back to frontpage</a>
 </form>
+{% endblock %}

@@ -1,6 +1,10 @@
+{% extends "layout.html" %}
+{% block title %}All ingredients{% endblock %}
+{% block content %}
 <hr>
 {% for ingredient in ingredients %}
 {{ ingredient[0] }}
 <hr>
 {% endfor %}
 <a href="/">Frontpage</a>
+{% endblock %}

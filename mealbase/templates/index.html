@@ -1,3 +1,6 @@
+{% extends "layout.html" %}
+{% block title %}Frontpage{% endblock %}
+{% block content %}
 {% if session.user_name %}
 <a href="/log_meal">Log a meal</a>
 <p>
@@ -6,10 +9,9 @@
 <a href="/all_ingredients">See all logged ingredients</a>
 <p>
 <a href="/suggestions">Generate suggestions</a>
-<p>
-<a href="/logout">Log out</a>
 {% else %}
 <a href="/login">Log in</a>
 <p>
 <a href="/register">Create an account</a>
 {% endif %}
+{% endblock %}

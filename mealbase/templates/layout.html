@@ -1,0 +1,13 @@
+<!doctype html>
+<title>Mealbase - {% block title %}{% endblock %}</title>
+<h1>Mealbase</h1>
+{% if session.user_name %}
+<nav>
+  <ul>
+    <li><a href="/">Front Page</a></li>
+    <li><a href="/logout">Log out</a></li>
+  </ul>
+</nav>
+{% endif %}
+<hr>
+{% block content %}{% endblock %}

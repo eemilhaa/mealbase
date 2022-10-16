@@ -1,3 +1,6 @@
+{% extends "layout.html" %}
+{% block title %}Suggestion{% endblock %}
+{% block content %}
 <form action="/log_meal" method="post", id="log_meal">
 Meal: <input type="text" name="meal">
 <p>
@@ -11,3 +14,4 @@ Main ingredients (separate with a comma + space: ingredient1, ingredient2, ...):
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 <a href="/">Back</a>
+{% endblock %}
