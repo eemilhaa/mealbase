@@ -10,6 +10,12 @@
     <li><a href="/logout">Log out</a></li>
   </ul>
 </nav>
+{% else %}
+<nav>
+  <ul>
+    <li><a href="/">Front Page</a></li>
+  </ul>
+</nav>
 {% endif %}
 
 {% if error %}
