@@ -51,7 +51,8 @@ def create_routes(app, db):
         try:
             users.login(username, password, db)
         except Exception as error:
-            return _show_error_page(error, link="/login")
+            # return _show_error_page(error, link="/login")
+            return render_template("login.html", error=error)
         return redirect("/")
 
     @app.route("/register", methods=["GET", "POST"])

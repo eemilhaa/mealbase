@@ -1,6 +1,8 @@
 <!doctype html>
 <title>Mealbase - {% block title %}{% endblock %}</title>
+
 <h1>Mealbase</h1>
+
 {% if session.user_name %}
 <nav>
   <ul>
@@ -9,5 +11,14 @@
   </ul>
 </nav>
 {% endif %}
+
+{% if error %}
+<hr>
+<div class="error">
+Error: {{error}}
+<br>
+{% endif %}
+
+</div>
 <hr>
 {% block content %}{% endblock %}
