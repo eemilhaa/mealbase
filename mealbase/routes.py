@@ -51,12 +51,11 @@ def create_routes(app, db):
         try:
             users.login(username, password, db)
         except Exception as error:
-            # return _show_error_page(error, link="/login")
             return render_template(
                 "login.html",
                 error=error,
                 prefill_username=username,
-                prefill_password=password
+                prefill_password=password,
             )
         return redirect("/")
 
@@ -71,7 +70,12 @@ def create_routes(app, db):
             try:
                 users.register(username, password, role, db)
             except Exception as error:
-                return _show_error_page(error, link="/register")
+                return render_template(
+                    "register.html",
+                    error=error,
+                    prefill_username=username,
+                    prefill_password=password,
+                )
             return redirect("/")
 
     @app.route("/logout")
