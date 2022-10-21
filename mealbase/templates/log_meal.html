@@ -2,7 +2,7 @@
 {% block title %}Suggestion{% endblock %}
 {% block content %}
 <form action="/log_meal" method="post", id="log_meal">
-Meal: <input type="text" name="meal">
+Meal: <input type="text" name="meal" value={{prefill_meal}}>
 <p>
 Date: <input type="date" name="date" value={{default_date}}>
 <p>

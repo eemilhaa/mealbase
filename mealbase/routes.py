@@ -20,7 +20,12 @@ def create_routes(app, db):
         try:
             log.log_meal(meal, log_date, ingredients, users.user_id(), db)
         except Exception as error:
-            return _show_error_page(error, link="/log_meal")
+            return render_template(
+                "log_meal.html",
+                default_date=date.today(),
+                error=error,
+                prefill_meal=meal,
+            )
         return redirect("/")
 
     @app.route("/meal_log")
