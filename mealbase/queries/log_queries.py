@@ -75,7 +75,7 @@ def _get_id(table, name, db, user_id=None):
     if user_id:
         result = db.session.execute(
             sql_user,
-            {"name": name, "user_id": user_id}
+            {"name": name.lower(), "user_id": user_id}
         )
     else:
         result = db.session.execute(sql_no_user, {"name": name})
