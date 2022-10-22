@@ -117,11 +117,3 @@ def create_routes(app, db):
     def logout():
         users.logout()
         return redirect("/")
-
-
-def _show_error_page(error, link="/"):
-    return render_template(
-        "error.html",
-        content=error,
-        redirect_to=link,
-    )
