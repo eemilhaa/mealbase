@@ -14,6 +14,9 @@
   <div class="logout">
     <a href="/logout">Log out</a>
   </div>
+  <div class="userinfo">
+    Logged in as {{session.user_name}}
+  </div>
   {% endif %}
 
   <div class="frontpage">
@@ -21,10 +24,11 @@
   </div>
 
   {% if error %}
-  <hr>
   <div class="error">
     Error: {{error}}
   </div>
   {% endif %}
+  <div class="content">
   {% block content %}{% endblock %}
+  </div>
 </body>
