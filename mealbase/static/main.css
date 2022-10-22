@@ -68,6 +68,9 @@ input[type=submit]:hover {
   padding: 1em;
   border-radius: 1em;
 }
+h2 {
+  margin-top: 0em;
+}
 
 .error {
   color: var(--bg);
