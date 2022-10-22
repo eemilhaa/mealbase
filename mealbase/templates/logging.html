@@ -16,7 +16,7 @@ New meal: {{meal}}
 <p>
 Input its main ingredients (separate with a comma + space: ingredient1, ingredient2, ...):
 <p>
-<textarea name="ingredients" value={{prefill_ingredients}} form="log_ingredients", rows="5", cols="33"></textarea>
+<textarea name="ingredients" value="{{ prefill_ingredients }}" form="log_ingredients", rows="5", cols="33"></textarea>
 <p>
 <input type="submit" value="Log ingredients">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">

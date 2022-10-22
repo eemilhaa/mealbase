@@ -12,7 +12,7 @@ def create_routes(app, db):
         if request.method == "GET":
             return render_template(
                 "logging.html",
-                default_date=date.today()
+                default_date=date.today(),
             )
         users.check_csrf(request.form["csrf_token"])
         user_id = users.user_id()
@@ -30,12 +30,12 @@ def create_routes(app, db):
         if meal_exists:
             log.log_known_meal(meal, log_date, user_id, db)
             return redirect("/")
-        log.meal_to_session(meal)
+        log.save_meal_to_session(meal)
         return redirect("/log_ingredients")
 
     @app.route("/log_ingredients", methods=["GET", "POST"])
     def log_ingredients():
-        meal = log.meal_from_session()
+        meal = log.get_meal_from_session()
         if not meal:
             return redirect("/")
         if request.method == "GET":
@@ -53,8 +53,9 @@ def create_routes(app, db):
         except Exception as error:
             return render_template(
                 "logging.html",
-                default_date=date.today(),
+                meal=meal,
                 error=error,
+                ingredients_needed=True,
                 prefill_ingredients=ingredients,
             )
         return redirect("/")

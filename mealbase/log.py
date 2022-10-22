@@ -15,6 +15,7 @@ def log_known_meal(meal, log_date, user_id, db):
     if not meal:
         raise Exception("Input the meal name")
     log_queries.log_known_meal(meal, log_date, user_id, db)
+    _delete_meal_from_session()
 
 
 def log_new_meal(meal, log_date, ingredients, user_id, db):
@@ -23,14 +24,20 @@ def log_new_meal(meal, log_date, ingredients, user_id, db):
     _validate_input(meal, max_length=100)
     _validate_input(ingredients, max_length=300)
     log_queries.log_new_meal(meal, log_date, ingredients, user_id, db)
+    _delete_meal_from_session()
 
 
-def meal_to_session(meal):
+def save_meal_to_session(meal):
     session["meal"] = meal
 
 
-def meal_from_session():
-    return session.pop("meal", None)
+def get_meal_from_session():
+    if "meal" in session:
+        return session["meal"]
+
+
+def _delete_meal_from_session():
+    del session["meal"]
 
 
 def get_log(user_id, db):
