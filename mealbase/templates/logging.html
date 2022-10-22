@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block title %}Logging{% endblock %}
 {% block content %}
-{% if not ingredients_needed %}
+{% if not log_ingredients %}
 <form action="/log_meal" method="post", id="log_meal">
 Meal: <input type="text" name="meal" value="{{ prefill_meal }}">
 <p>
