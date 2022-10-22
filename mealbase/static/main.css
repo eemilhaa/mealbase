@@ -16,8 +16,26 @@ body {
   max-width: 40em;
   background: var(--bg);
   color: var(--light_text);
-  /* font-family: 'Helvetica', 'Arial', sans-serif; */
-  font-family: 'Courier', monospace;
+  font-family: 'Helvetica', 'Arial', sans-serif;
+  // font-family: 'Courier', monospace;
+}
+
+input[type=text], input[type=date], input[type=password], textarea {
+  border-radius: 1em;
+  padding: 0.5em;
+  border: none;
+  width: 50%;
+}
+input[type=submit] {
+  background-color: var(--light_text);
+  border: none;
+  border-radius: 1em;
+  color: white;
+  padding: 0.5em 1em;
+  text-decoration: none;
+}
+input[type=submit]:hover {
+  background-color: var(--green)
 }
 
 .frontpage {
