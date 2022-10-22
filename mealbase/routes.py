@@ -99,20 +99,19 @@ def create_routes(app, db):
     def register():
         if request.method == "GET":
             return render_template("register.html")
-        if request.method == "POST":
-            username = request.form["username"]
-            password = request.form["password"]
-            role = request.form["role"]
-            try:
-                users.register(username, password, role, db)
-            except Exception as error:
-                return render_template(
-                    "register.html",
-                    error=error,
-                    prefill_username=username,
-                    prefill_password=password,
-                )
-            return redirect("/")
+        username = request.form["username"]
+        password = request.form["password"]
+        role = request.form["role"]
+        try:
+            users.register(username, password, role, db)
+        except Exception as error:
+            return render_template(
+                "register.html",
+                error=error,
+                prefill_username=username,
+                prefill_password=password,
+            )
+        return redirect("/")
 
     @app.route("/logout")
     def logout():
