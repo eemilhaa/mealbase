@@ -6,6 +6,7 @@ from mealbase import log
 
 
 def create_routes(app, db):
+
     @app.route("/log_meal", methods=["GET", "POST"])
     def log_meal():
         if request.method == "GET":
@@ -14,17 +15,44 @@ def create_routes(app, db):
                 default_date=date.today()
             )
         users.check_csrf(request.form["csrf_token"])
+        user_id = users.user_id()
         meal = request.form["meal"]
         log_date = request.form["date"]
+        if log.meal_exists(meal, user_id, db):
+            try:
+                log.log_known_meal(meal, log_date, user_id, db)
+                return redirect("/")
+            except Exception as error:
+                return render_template(
+                    "log_meal.html",
+                    default_date=date.today(),
+                    error=error,
+                    prefill_meal=meal,
+                )
+        log.meal_to_session(meal)
+        return redirect("/log_ingredients")
+
+    @app.route("/log_ingredients", methods=["GET", "POST"])
+    def log_ingredients():
+        meal = log.meal_from_session()
+        if request.method == "GET":
+            return render_template(
+                "log_meal.html",
+                meal=meal,
+                ingredients_needed=True,
+            )
+        users.check_csrf(request.form["csrf_token"])
+        user_id = users.user_id()
         ingredients = request.form["ingredients"]
+        log_date = date.today()
         try:
-            log.log_meal(meal, log_date, ingredients, users.user_id(), db)
+            log.log_new_meal(meal, log_date, ingredients, user_id, db)
         except Exception as error:
             return render_template(
                 "log_meal.html",
                 default_date=date.today(),
                 error=error,
-                prefill_meal=meal,
+                prefill_ingredients=ingredients,
             )
         return redirect("/")
 

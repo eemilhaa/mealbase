@@ -1,16 +1,27 @@
 {% extends "layout.html" %}
-{% block title %}Suggestion{% endblock %}
+{% block title %}Logging{% endblock %}
 {% block content %}
+{% if not ingredients_needed %}
 <form action="/log_meal" method="post", id="log_meal">
-Meal: <input type="text" name="meal" value={{prefill_meal}}>
+Meal: <input type="text" name="meal" value="{{ prefill_meal }}">
 <p>
-Date: <input type="date" name="date" value={{default_date}}>
+Date: <input type="date" name="date" value="{{ default_date }}">
 <p>
-Main ingredients (separate with a comma + space: ingredient1, ingredient2, ...):
-<p>
-<textarea name="ingredients" form="log_meal", rows="5", cols="33"></textarea>
-<p>
-<input type="submit" value="Log">
+<input type="submit" value="Log meal">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
+{% else %}
+<form action="/log_ingredients" method="post", id="log_ingredients">
+New meal: {{meal}}
+<p>
+Input its main ingredients (separate with a comma + space: ingredient1, ingredient2, ...):
+<p>
+<textarea name="ingredients" value={{prefill_ingredients}} form="log_ingredients", rows="5", cols="33"></textarea>
+<p>
+<input type="submit" value="Log ingredients">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+</form>
+<p>
+<a href="/log_meal">Go back to inputting meal</a>
+{% endif %}
 {% endblock %}
