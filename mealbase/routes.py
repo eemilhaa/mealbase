@@ -36,6 +36,8 @@ def create_routes(app, db):
     @app.route("/log_ingredients", methods=["GET", "POST"])
     def log_ingredients():
         meal = log.meal_from_session()
+        if not meal:
+            return redirect("/")
         if request.method == "GET":
             return render_template(
                 "logging.html",

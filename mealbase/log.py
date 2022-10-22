@@ -30,7 +30,7 @@ def meal_to_session(meal):
 
 
 def meal_from_session():
-    return session["meal"]
+    return session.pop("meal", None)
 
 
 def get_log(user_id, db):
