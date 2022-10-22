@@ -11,24 +11,25 @@ def create_routes(app, db):
     def log_meal():
         if request.method == "GET":
             return render_template(
-                "log_meal.html",
+                "logging.html",
                 default_date=date.today()
             )
         users.check_csrf(request.form["csrf_token"])
         user_id = users.user_id()
         meal = request.form["meal"]
         log_date = request.form["date"]
-        if log.meal_exists(meal, user_id, db):
-            try:
-                log.log_known_meal(meal, log_date, user_id, db)
-                return redirect("/")
-            except Exception as error:
-                return render_template(
-                    "log_meal.html",
-                    default_date=date.today(),
-                    error=error,
-                    prefill_meal=meal,
-                )
+        try:
+            meal_exists = log.meal_exists(meal, user_id, db)
+        except Exception as error:
+            return render_template(
+                "logging.html",
+                default_date=date.today(),
+                error=error,
+                prefill_meal=meal,
+            )
+        if meal_exists:
+            log.log_known_meal(meal, log_date, user_id, db)
+            return redirect("/")
         log.meal_to_session(meal)
         return redirect("/log_ingredients")
 
@@ -37,7 +38,7 @@ def create_routes(app, db):
         meal = log.meal_from_session()
         if request.method == "GET":
             return render_template(
-                "log_meal.html",
+                "logging.html",
                 meal=meal,
                 ingredients_needed=True,
             )
@@ -49,7 +50,7 @@ def create_routes(app, db):
             log.log_new_meal(meal, log_date, ingredients, user_id, db)
         except Exception as error:
             return render_template(
-                "log_meal.html",
+                "logging.html",
                 default_date=date.today(),
                 error=error,
                 prefill_ingredients=ingredients,

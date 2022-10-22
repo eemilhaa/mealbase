@@ -5,13 +5,15 @@ from mealbase.queries import log_queries
 
 
 def meal_exists(meal, user_id, db):
+    if not meal:
+        raise Exception("Input the meal name")
+    _validate_input(meal, max_length=100)
     return log_queries.meal_exists(meal, user_id, db)
 
 
 def log_known_meal(meal, log_date, user_id, db):
     if not meal:
         raise Exception("Input the meal name")
-    _validate_input(meal, max_length=100)
     log_queries.log_known_meal(meal, log_date, user_id, db)
 
 
