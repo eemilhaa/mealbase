@@ -1,11 +1,21 @@
-def log_meal(meal, log_date, ingredients, user_id, db):
+def meal_exists(meal, user_id, db):
     meal_id = _get_id("meals", meal, db, user_id,)
-    if not meal_id:
-        meal_id = _add_new_meal(meal, user_id, db)
-        ingredient_ids = _add_ingredients(ingredients, db)
-        _add_meal_ingredient_relations(
-            meal_id, ingredient_ids, user_id, db
-        )
+    if meal_id:
+        return True
+    return False
+
+
+def log_new_meal(meal, log_date, ingredients, user_id, db):
+    meal_id = _add_new_meal(meal, user_id, db)
+    ingredient_ids = _add_ingredients(ingredients, db)
+    _add_meal_ingredient_relations(
+        meal_id, ingredient_ids, user_id, db
+    )
+    _add_meal_to_log(meal_id, log_date, db)
+
+
+def log_known_meal(meal, log_date, user_id, db):
+    meal_id = _get_id("meals", meal, db, user_id,)
     _add_meal_to_log(meal_id, log_date, db)
 
 
@@ -65,7 +75,7 @@ def _get_id(table, name, db, user_id=None):
     if user_id:
         result = db.session.execute(
             sql_user,
-            {"name": name, "user_id": user_id}
+            {"name": name.lower(), "user_id": user_id}
         )
     else:
         result = db.session.execute(sql_no_user, {"name": name})

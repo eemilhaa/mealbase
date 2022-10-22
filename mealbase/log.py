@@ -1,14 +1,45 @@
 import datetime
+from flask import session
 
 from mealbase.queries import log_queries
 
 
-def log_meal(meal, log_date, ingredients, user_id, db):
+def meal_exists(meal, user_id, db):
+    if not meal:
+        raise Exception("Input the meal name")
+    _validate_input(meal, max_length=100)
+    return log_queries.meal_exists(meal, user_id, db)
+
+
+def log_known_meal(meal, log_date, user_id, db):
+    if not meal:
+        raise Exception("Input the meal name")
+    log_queries.log_known_meal(meal, log_date, user_id, db)
+    _delete_log_from_session()
+
+
+def log_new_meal(meal, log_date, ingredients, user_id, db):
     if not meal or not ingredients:
-        raise Exception("Input both the meal and the ingredients")
+        raise Exception("Input the ingredients")
     _validate_input(meal, max_length=100)
     _validate_input(ingredients, max_length=300)
-    log_queries.log_meal(meal, log_date, ingredients, user_id, db)
+    log_queries.log_new_meal(meal, log_date, ingredients, user_id, db)
+    _delete_log_from_session()
+
+
+def save_log_to_session(meal, date):
+    session["meal"] = meal
+    session["date"] = date
+
+
+def get_log_from_session():
+    if "meal" in session and "date" in session:
+        return session["meal"], session["date"]
+
+
+def _delete_log_from_session():
+    del session["meal"]
+    del session["date"]
 
 
 def get_log(user_id, db):
