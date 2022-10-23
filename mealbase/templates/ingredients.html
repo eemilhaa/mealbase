@@ -1,9 +1,14 @@
 {% extends "layout.html" %}
 {% block title %}All ingredients{% endblock %}
 {% block content %}
+<h2>All ingredients</h2>
+{% if not ingredients %}
+No ingredients logged yet.
+{% else %}
 <hr>
 {% for ingredient in ingredients %}
 {{ ingredient[0] }}
 <hr>
 {% endfor %}
+{% endif %}
 {% endblock %}

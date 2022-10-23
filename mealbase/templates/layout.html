@@ -1,30 +1,34 @@
 <!doctype html>
+<link rel="stylesheet" href="/static/main.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
 <title>Mealbase - {% block title %}{% endblock %}</title>
 
-<h1>Mealbase</h1>
+<body>
 
-{% if session.user_name %}
-<nav>
-  <ul>
-    <li><a href="/">Front Page</a></li>
-    <li><a href="/logout">Log out</a></li>
-  </ul>
-</nav>
-{% else %}
-<nav>
-  <ul>
-    <li><a href="/">Front Page</a></li>
-  </ul>
-</nav>
-{% endif %}
+  <div class="Heading">
+    <h1>Mealbase</h1>
+  </div>
 
-{% if error %}
-<hr>
-<div class="error">
-Error: {{error}}
-<br>
-{% endif %}
+  {% if session.user_name %}
+  <div class="logout">
+    <a href="/logout">Log out</a>
+  </div>
+  <div class="userinfo">
+    Logged in as {{session.user_name}}
+  </div>
+  {% endif %}
 
-</div>
-<hr>
-{% block content %}{% endblock %}
+  <div class="frontpage">
+    <a href="/">Front Page</a>
+  </div>
+
+  {% if error %}
+  <div class="error">
+    Error: {{error}}
+  </div>
+  {% endif %}
+  <div class="content">
+  {% block content %}{% endblock %}
+  </div>
+</body>

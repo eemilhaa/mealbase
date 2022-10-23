@@ -1,0 +1,92 @@
+:root {
+  --bg: #FFFFFF;
+  --dark_bg: #CED4DE;
+  --text: #2D3142;
+  --light_text: #4F5D75;
+  --red: #F4796B;
+  --orange: #F05D23;
+  --green: #7EA16B;
+  --yellow: #FFD447;
+  --light_cyan: #9BC1BC;
+  --dark_cyan: #5CA4A9;
+}
+
+body {
+  margin: auto;
+  max-width: 40em;
+  background: var(--bg);
+  color: var(--light_text);
+  font-family: 'Helvetica', 'Arial', sans-serif;
+  // font-family: 'Courier', monospace;
+}
+
+input[type=text], input[type=date], input[type=password], textarea {
+  border-radius: 1em;
+  padding: 0.5em;
+  border: none;
+  width: 50%;
+}
+input[type=submit] {
+  background-color: var(--light_text);
+  border: none;
+  border-radius: 1em;
+  color: white;
+  padding: 0.5em 1em;
+  text-decoration: none;
+}
+input[type=submit]:hover {
+  background-color: var(--green)
+}
+
+.frontpage {
+  padding: 1em;
+  border-radius: 1em;
+  background: var(--light_text);
+  margin-bottom: 1em;
+}
+.frontpage a {
+  color: var(--bg);
+}
+.userinfo {
+  float: right;
+  padding: 1em;
+  background: var(--light-text);
+  color: var(--bg);
+}
+.logout {
+  float: right;
+  padding: 1em;
+  border-radius: 0em 1em 1em 0em;
+  background: var(--red);
+}
+.logout a {
+  color: var(--bg);
+}
+
+.content {
+  background: var(--dark_bg);
+  padding: 1em;
+  border-radius: 1em;
+}
+h2 {
+  margin-top: 0em;
+}
+
+.error {
+  color: var(--bg);
+  background: var(--red);
+  padding: 1em;
+  border-radius: 1em;
+  margin-bottom: 1em;
+}
+
+hr {
+  border-top: 1px;
+}
+
+a {
+  color: var(--light_text);
+}
+a:hover {
+  font-weight: 900;
+}
