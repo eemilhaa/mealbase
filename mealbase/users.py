@@ -5,10 +5,10 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from mealbase.queries import user_queries
 
 
-def register(name, password, role, db):
+def register(name, password, db):
     _validate_username(name, db)
     _validate_password(password)
-    _add_new_user(name, password, role, db)
+    _add_new_user(name, password, db)
     _login(name, password, db)
 
 
@@ -78,6 +78,6 @@ def _validate_password(password):
         )
 
 
-def _add_new_user(name, password, role, db):
+def _add_new_user(name, password, db):
     hash_value = generate_password_hash(password)
-    user_queries.add_user(name, hash_value, role, db)
+    user_queries.add_user(name, hash_value, db)

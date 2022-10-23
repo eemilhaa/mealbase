@@ -110,9 +110,8 @@ def create_routes(app, db):
             return render_template("register.html")
         username = request.form["username"]
         password = request.form["password"]
-        role = request.form["role"]
         try:
-            users.register(username, password, role, db)
+            users.register(username, password, db)
         except Exception as error:
             return render_template(
                 "register.html",
