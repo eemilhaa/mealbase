@@ -42,8 +42,9 @@ def get_log_from_session():
 
 
 def _delete_log_from_session():
-    del session["meal"]
-    del session["date"]
+    if "meal" in session and "date" in session:
+        del session["meal"]
+        del session["date"]
 
 
 def get_log(user_id, db):
