@@ -9,7 +9,7 @@ Ingredients you have not eaten in a while:
 <p>
 <hr>
 {% for suggestion in suggestions %}
-<b>Ingredient:</b> {{ suggestion[0] }}
+<b>Ingredient:</b> <a href="/get_meals_with_{{ suggestion[0] }}"> {{ suggestion[0] }}</a>
 <p>
 <b>Days since last eating:</b> {{suggestion[1]}}
 <hr>

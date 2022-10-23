@@ -65,6 +65,25 @@ def get_ingredient_history(user_id, db):
     return ingredient_history
 
 
+def get_meals_with_ingredient(ingredient, user_id, db):
+    sql = """
+        SELECT meals.name
+        FROM meals, meal_ingredients
+        WHERE meal_ingredients.user_id=:user_id
+        AND meals.user_id=:user_id
+        AND meal_ingredients.ingredient_id=(
+            SELECT id FROM ingredients WHERE name=:ingredient
+        )
+        AND meals.id=meal_ingredients.meal_id;
+    """
+    result = db.session.execute(
+        sql,
+        {"ingredient": ingredient, "user_id": user_id}
+    )
+    meals_with_ingredient = result.fetchall()
+    return meals_with_ingredient
+
+
 def _get_id(table, name, db, user_id=None):
     sql_user = f"""
         SELECT id FROM {table} WHERE name=:name AND user_id=:user_id;

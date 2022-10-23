@@ -74,6 +74,15 @@ def create_routes(app, db):
         suggestions = log.generate_suggestions(users.user_id(), db)
         return render_template("suggestions.html", suggestions=suggestions)
 
+    @app.route("/get_meals_with_<ingredient>")
+    def get_meals_with_ingredient(ingredient):
+        meals = log.get_meals_with_ingredient(ingredient, users.user_id(), db)
+        return render_template(
+            "meals_with_ingredient.html",
+            ingredient=ingredient,
+            meals=meals
+        )
+
     @app.route("/")
     def index():
         return render_template("index.html")

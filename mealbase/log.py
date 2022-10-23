@@ -27,6 +27,10 @@ def log_new_meal(meal, log_date, ingredients, user_id, db):
     _delete_log_from_session()
 
 
+def get_meals_with_ingredient(ingredient, user_id, db):
+    return log_queries.get_meals_with_ingredient(ingredient, user_id, db)
+
+
 def save_log_to_session(meal, date):
     session["meal"] = meal
     session["date"] = date

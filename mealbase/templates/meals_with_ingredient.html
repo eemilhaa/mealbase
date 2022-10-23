@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block title %}Suggested meals{% endblock %}
+{% block content %}
+<h2>Meals with {{ ingredient }}</h2>
+{% if not meals %}
+No meals found.
+{% else %}
+Meals that contain {{ ingredient }}:
+<p>
+<hr>
+{% for meal in meals %}
+<b>Meal:</b> {{ meal[0] }}</a>
+<hr>
+{% endfor %}
+{% endif %}
+{% endblock %}
