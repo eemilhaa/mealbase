@@ -12,9 +12,7 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: 'Helvetica', 'Arial', sans-serif;
-  // font-family: 'Courier', monospace;
 }
-
 input[type=text], input[type=date], input[type=password], textarea {
   border-radius: 1em;
   padding: 0.5em;
@@ -31,6 +29,18 @@ input[type=submit] {
 }
 input[type=submit]:hover {
   background-color: var(--green)
+}
+hr {
+  border-top: 1px;
+}
+a {
+  color: var(--green);
+}
+a:hover {
+  font-weight: 900;
+}
+h2 {
+  margin-top: 0em;
 }
 
 .frontpage {
@@ -57,31 +67,15 @@ input[type=submit]:hover {
 .logout a {
   color: var(--bg);
 }
-
 .content {
   background: var(--dark_bg);
   padding: 1em;
   border-radius: 1em;
 }
-h2 {
-  margin-top: 0em;
-}
-
 .error {
   color: var(--bg);
   background: var(--red);
   padding: 1em;
   border-radius: 1em;
   margin-bottom: 1em;
-}
-
-hr {
-  border-top: 1px;
-}
-
-a {
-  color: var(--green);
-}
-a:hover {
-  font-weight: 900;
 }
