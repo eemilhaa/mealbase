@@ -1,21 +1,16 @@
 :root {
   --bg: #FFFFFF;
   --dark_bg: #CED4DE;
-  --text: #2D3142;
-  --light_text: #4F5D75;
+  --text: #4F5D75;
   --red: #F4796B;
-  --orange: #F05D23;
-  --green: #7EA16B;
-  --yellow: #FFD447;
-  --light_cyan: #9BC1BC;
-  --dark_cyan: #5CA4A9;
+  --green: #5E8C61;
 }
 
 body {
   margin: auto;
   max-width: 40em;
   background: var(--bg);
-  color: var(--light_text);
+  color: var(--text);
   font-family: 'Helvetica', 'Arial', sans-serif;
   // font-family: 'Courier', monospace;
 }
@@ -27,7 +22,7 @@ input[type=text], input[type=date], input[type=password], textarea {
   width: 50%;
 }
 input[type=submit] {
-  background-color: var(--light_text);
+  background-color: var(--text);
   border: none;
   border-radius: 1em;
   color: white;
@@ -41,7 +36,7 @@ input[type=submit]:hover {
 .frontpage {
   padding: 1em;
   border-radius: 1em;
-  background: var(--light_text);
+  background: var(--text);
   margin-bottom: 1em;
 }
 .frontpage a {
@@ -50,7 +45,7 @@ input[type=submit]:hover {
 .userinfo {
   float: right;
   padding: 1em;
-  background: var(--light-text);
+  background: var(--text);
   color: var(--bg);
 }
 .logout {
@@ -85,7 +80,7 @@ hr {
 }
 
 a {
-  color: var(--light_text);
+  color: var(--green);
 }
 a:hover {
   font-weight: 900;
