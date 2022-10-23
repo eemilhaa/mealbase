@@ -2,44 +2,30 @@
 Mealbase is an application for generating food suggestions about the meals you eat. Try
 it on [heroku](https://tsoha-mealbase.herokuapp.com/) (but read this readme first!)
 
-## The idea
+## How it works
 - The user logs the meals they eat.
   - All meals are comprised of ingredients. For each meal, the user inputs at least the
 main ingredients.
     - i.e. meatballs and spaghetti -> meat, pasta. Chicken soup -> chicken, potatoes.
 - Based on the record of meals, mealbase tries to suggest foods that keep your menu
 diverse. 
-  - Recommendations are done based on ingredients and logging dates. Currently mealbase
-suggests ingredients based on the number of days since they have last been logged. The
-longer the time since last eaten, the higher the priority for suggesting.
+  - Recommendations are done based on ingredients and logging dates. Mealbase suggests
+ingredients based on the number of days since they have last been logged - the longer
+the time since last eaten, the higher the priority for suggesting.
+  - The user can query the database for meals containing the suggested ingredients.
 
 ## Features
-The current status of features:
-### Core features
+All planned core features have been implemented:
 - [x] Creating user accounts
 - [x] A login / logout
-- [x] A page for logging foods: Works, but logging meals could be separated from logging
-ingredients, since if a meal is already in the database, ingredients are not needed.
+- [x] A page for logging meals
+- [x] A page for logging ingredients when needed
 - [x] A page for viewing the meal log
 - [x] A page for viewing logged ingredients
-- [x] A page with recommendations: Currently a fixed number of 4 ingredients is
-suggested, could be more dynamic
-- [x] Situational error messages and redirecting from errors
-- [ ] Nicer UI
-
-### Additional features
-- [ ] Additional suggestion methods
-- [ ] A page for displaying additional statistics / redirecting to other pages with
-additional statistics.
-- [ ] User roles: An admin role with access to additional operations.
-> **Note** at the moment when creating an account role selection is available, but it
-does not do anything.
-- [ ] Blacklist: Maybe a user tries a new meal or an ingredient but doesn't like it.
-A functionality to "blacklist" it so mealbase won't recommend it anymore could be
-useful.
-- [ ] Recipes: Each meal could have a recipe too.
-- [ ] Shopping lists: If we have recipes, we could probably generate a shopping list
-from a meal suggestion.
+- [x] A page with ingredient suggestions
+- [x] Links from the suggestions page to meals that contain the suggested ingredients
+- [x] Situational error messages
+- [x] Clean UI
 
 ## Architechture
 ```
@@ -55,17 +41,18 @@ mealbase
 │   ├── log_queries.py   # Queries for accessing the log. Used by log.py
 │   └── user_queries.py  # Queries for accessing the users. Used by users.py
 └── templates  # The templates
-    ├── error.html
-    ├── index.html
+    ├── index.html
     ├── ingredients.html
-    ├── log_meal.html
+    ├── layout.html
+    ├── logging.html
     ├── login.html
     ├── meal_log.html
+    ├── meals_with_ingredient.html
     ├── register.html
     └── suggestions.html
 ```
 
-## Setup
+## Development
 ### Setting up a local database container
 Start the service:
 ```console
