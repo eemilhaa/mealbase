@@ -2,6 +2,9 @@
 {% block title %}Meal log{% endblock %}
 {% block content %}
 <h2>Meal log</h2>
+{% if not log %}
+No meals logged yet.
+{% else %}
 <hr>
 {% for row in log %}
 <b>Meal:</b> {{ row[0] }}
@@ -9,4 +12,5 @@
 <b>Date:</b> {{ row[1].strftime("%Y-%m-%d") }}
 <hr>
 {% endfor %}
+{% endif %}
 {% endblock %}

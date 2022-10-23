@@ -2,6 +2,9 @@
 {% block title %}Suggestion{% endblock %}
 {% block content %}
 <h2>Suggested ingredients</h2>
+{% if not suggestions %}
+No ingredients to suggest yet.
+{% else %}
 Ingredients you have not eaten in a while:
 <p>
 <hr>
@@ -11,4 +14,5 @@ Ingredients you have not eaten in a while:
 <b>Days since last eating:</b> {{suggestion[1]}}
 <hr>
 {% endfor %}
+{% endif %}
 {% endblock %}
