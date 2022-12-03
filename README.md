@@ -1,6 +1,7 @@
 # Mealbase
-Mealbase is an application for generating food suggestions about the meals you eat. Try
-it on [heroku](https://tsoha-mealbase.herokuapp.com/) (but read this readme first!)
+Mealbase is an application for generating food suggestions about the meals you eat. ~~Try
+it on [heroku](https://tsoha-mealbase.herokuapp.com/).~~ Heroku free was cancelled and thus
+this app is no longer available there.
 
 ## How it works
 - The user logs the meals they eat.
